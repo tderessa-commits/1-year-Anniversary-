@@ -34,12 +34,12 @@ h1 {
 #revealText {
   margin-top: 40px;
   font-size: 1.3em;
-  max-width: 600px;
+  max-width: 650px;
   margin-left: auto;
   margin-right: auto;
   opacity: 0;
   transition: opacity 1s ease;
-  line-height: 1.6;
+  line-height: 1.7;
 }
 
 footer {
@@ -87,7 +87,7 @@ function updateCountdown() {
 
   if (distance <= 0) {
     countdownElement.innerHTML = "❤️ Happy 1 Year Anniversary My Love ❤️";
-    revealElement.innerHTML = "Today we celebrate us. One year of memories, laughter, growth, and love. And I would choose you all over again.";
+    revealElement.innerHTML = "Today we celebrate one year of us. One year of laughter, growth, deep talks, quiet drives, and choosing each other. And I would choose you again in every lifetime.";
     revealElement.style.opacity = 1;
     return;
   }
@@ -102,30 +102,29 @@ function updateCountdown() {
 
   let message = "";
 
+  // Progressive reveal
   if (days <= 1) {
-    message = "Tomorrow we celebrate 1 year of choosing each other. And I still get excited about you.";
+    message = "Tomorrow we celebrate one year of loving each other. And somehow, I still get butterflies when I think about you.";
   } 
   else if (days <= 5) {
-    message = "Five days left… and I’m thinking about every laugh, every drive, every quiet moment we’ve shared.";
+    message = "Five days left… and I keep replaying all our memories in my head. Every laugh. Every look. Every moment.";
   } 
   else if (days <= 10) {
-    message = "Ten days until we celebrate one year. One year of growing together.";
+    message = "Ten days until we celebrate one year. One year of building something real, steady, and beautiful.";
   } 
   else if (days <= 20) {
     message = "Less than three weeks until our anniversary. And I still look at you like it’s the beginning.";
   } 
-  else if (days <= 30) {
-    message = "The countdown has begun. Something special is coming.";
-  } 
   else {
-    message = "";
+    // This now shows immediately (today)
+    message = "The countdown has begun. Every second that passes brings us closer to celebrating one year of us ❤️";
   }
 
   if (message !== revealElement.innerHTML) {
     revealElement.style.opacity = 0;
     setTimeout(() => {
       revealElement.innerHTML = message;
-      revealElement.style.opacity = message ? 1 : 0;
+      revealElement.style.opacity = 1;
     }, 500);
   }
 }
