@@ -3,134 +3,300 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>1 Year With You ❤️</title>
+<title>Our Anniversary Adventure ❤️</title>
 
 <style>
-body {
-  margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(to bottom right, #ffe6f0, #fff5f9);
-  text-align: center;
-  color: #333;
+
+body{
+font-family:Segoe UI,sans-serif;
+margin:0;
+background:linear-gradient(to bottom right,#ffe6f0,#fff5f9);
+text-align:center;
+color:#333;
 }
 
-header {
-  padding: 80px 20px 40px 20px;
+h1{
+color:#e91e63;
+margin-top:40px;
 }
 
-h1 {
-  font-size: 3em;
-  color: #e91e63;
-  margin-bottom: 10px;
+.container{
+max-width:700px;
+margin:auto;
+padding:20px;
 }
 
-.countdown {
-  font-size: 2.5em;
-  font-weight: bold;
-  letter-spacing: 2px;
-  animation: pulse 1.5s infinite;
+.progress{
+width:100%;
+background:#eee;
+border-radius:20px;
+overflow:hidden;
+margin:30px 0;
 }
 
-#revealText {
-  margin-top: 40px;
-  font-size: 1.3em;
-  max-width: 650px;
-  margin-left: auto;
-  margin-right: auto;
-  opacity: 0;
-  transition: opacity 1s ease;
-  line-height: 1.7;
+.progress-bar{
+height:20px;
+width:0%;
+background:#e91e63;
+transition:width .7s ease;
 }
 
-footer {
-  margin-top: 80px;
-  padding: 20px;
-  font-size: 0.9em;
-  opacity: 0.6;
+.clue{
+display:none;
+margin-top:30px;
+padding:25px;
+background:white;
+border-radius:15px;
+box-shadow:0 6px 20px rgba(0,0,0,0.08);
 }
 
-@keyframes pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-  100% { transform: scale(1); }
+input{
+padding:10px;
+width:70%;
+border-radius:20px;
+border:1px solid #ccc;
+margin-top:10px;
 }
 
-@media (max-width: 600px) {
-  h1 { font-size: 2em; }
-  .countdown { font-size: 1.8em; }
-  #revealText { font-size: 1.1em; padding: 0 20px; }
+button{
+padding:10px 20px;
+border:none;
+background:#e91e63;
+color:white;
+border-radius:20px;
+margin-top:10px;
+cursor:pointer;
 }
+
+.memory{
+margin-top:20px;
+}
+
+.memory img{
+width:100%;
+border-radius:12px;
+margin-top:10px;
+}
+
+.music{
+position:fixed;
+top:15px;
+right:15px;
+}
+
+.final{
+font-size:1.2em;
+line-height:1.6;
+}
+
+canvas{
+position:fixed;
+pointer-events:none;
+top:0;
+left:0;
+}
+
 </style>
 </head>
 
 <body>
 
-<header>
-  <h1>1 Year With You ❤️</h1>
-  <div id="countdown" class="countdown"></div>
-</header>
+<div class="music">
+<button onclick="toggleMusic()">🎵 Music</button>
+</div>
 
-<div id="revealText"></div>
+<audio id="music" loop>
+<source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_7c3e13b60f.mp3">
+</audio>
 
-<footer>
-  Built with love by Tibebu ❤️
-</footer>
+<canvas id="confetti"></canvas>
+
+<div class="container">
+
+<h1>Our Anniversary Adventure ❤️</h1>
+
+<p>Every memory we made together leads to the next clue.</p>
+
+<div class="progress">
+<div id="progressBar" class="progress-bar"></div>
+</div>
+
+<!-- CLUE 1 -->
+<div id="clue1" class="clue" style="display:block;">
+<h2>Clue 1</h2>
+<p>Where did we share our first real laugh together?</p>
+
+<input id="answer1" placeholder="Type the place">
+
+<br>
+<button onclick="check1()">Unlock Next Clue</button>
+</div>
+
+<!-- MEMORY 1 -->
+<div id="memory1" class="memory" style="display:none;">
+<h3>A Memory</h3>
+<p>One of my favourite moments.</p>
+<img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e">
+</div>
+
+<!-- CLUE 2 -->
+<div id="clue2" class="clue">
+<h2>Clue 2</h2>
+<p>We once went somewhere adventurous and high. Where was it?</p>
+
+<input id="answer2">
+<br>
+<button onclick="check2()">Unlock Next Clue</button>
+</div>
+
+<!-- MEMORY 2 -->
+<div id="memory2" class="memory" style="display:none;">
+<h3>Another Memory</h3>
+<img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee">
+</div>
+
+<!-- CLUE 3 -->
+<div id="clue3" class="clue">
+<h2>Clue 3</h2>
+<p>Where do we go for quiet walks near the water?</p>
+
+<input id="answer3">
+<br>
+<button onclick="check3()">Reveal the Final Destination</button>
+</div>
+
+<!-- FINAL -->
+<div id="final" class="clue final">
+
+<h2>The Final Destination</h2>
+
+<p>
+Your final treasure is waiting.<br><br>
+
+Follow the lights through the trees.<br><br>
+
+Dinner is waiting for us under the stars.
+</p>
+
+</div>
+
+</div>
 
 <script>
-const anniversaryDate = new Date("March 29, 2026 00:00:00").getTime();
-const countdownElement = document.getElementById("countdown");
-const revealElement = document.getElementById("revealText");
 
-function updateCountdown() {
-  const now = new Date().getTime();
-  const distance = anniversaryDate - now;
+let progress = 0
 
-  if (distance <= 0) {
-    countdownElement.innerHTML = "❤️ Happy 1 Year Anniversary My Love ❤️";
-    revealElement.innerHTML = "Today we celebrate one year of us. One year of laughter, growth, deep talks, quiet drives, and choosing each other. And I would choose you again in every lifetime.";
-    revealElement.style.opacity = 1;
-    return;
-  }
-
-  const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-  const hours = Math.floor((distance / (1000 * 60 * 60)) % 24);
-  const minutes = Math.floor((distance / (1000 * 60)) % 60);
-  const seconds = Math.floor((distance / 1000) % 60);
-
-  countdownElement.innerHTML =
-    days + "d " + hours + "h " + minutes + "m " + seconds + "s";
-
-  let message = "";
-
-  // Progressive reveal
-  if (days <= 1) {
-    message = "Tomorrow we celebrate one year of loving each other. And somehow, I still get butterflies when I think about you.";
-  } 
-  else if (days <= 5) {
-    message = "Five days left… and I keep replaying all our memories in my head. Every laugh. Every look. Every moment.";
-  } 
-  else if (days <= 10) {
-    message = "Ten days until we celebrate one year. One year of building something real, steady, and beautiful.";
-  } 
-  else if (days <= 20) {
-    message = "Less than three weeks until our anniversary. And I still look at you like it’s the beginning.";
-  } 
-  else {
-    // This now shows immediately (today)
-    message = "The countdown has begun. Every second that passes brings us closer to celebrating one year of us ❤️";
-  }
-
-  if (message !== revealElement.innerHTML) {
-    revealElement.style.opacity = 0;
-    setTimeout(() => {
-      revealElement.innerHTML = message;
-      revealElement.style.opacity = 1;
-    }, 500);
-  }
+function updateProgress(){
+document.getElementById("progressBar").style.width = progress + "%"
 }
 
-setInterval(updateCountdown, 1000);
-updateCountdown();
+function check1(){
+let answer=document.getElementById("answer1").value.toLowerCase()
+
+if(answer.includes("beach")){
+progress=33
+updateProgress()
+
+document.getElementById("clue2").style.display="block"
+document.getElementById("memory1").style.display="block"
+
+}else{
+alert("Not quite… think about where our first memory happened.")
+}
+}
+
+function check2(){
+
+let answer=document.getElementById("answer2").value.toLowerCase()
+
+if(answer.includes("zip")){
+progress=66
+updateProgress()
+
+document.getElementById("clue3").style.display="block"
+document.getElementById("memory2").style.display="block"
+
+}else{
+alert("Think about our adventure together.")
+}
+}
+
+function check3(){
+
+let answer=document.getElementById("answer3").value.toLowerCase()
+
+if(answer.includes("walk")){
+
+progress=100
+updateProgress()
+
+document.getElementById("final").style.display="block"
+
+launchConfetti()
+
+}else{
+
+alert("One more memory… where do we go for quiet walks?")
+}
+}
+
+function toggleMusic(){
+
+let music=document.getElementById("music")
+
+if(music.paused){
+music.play()
+}else{
+music.pause()
+}
+
+}
+
+function launchConfetti(){
+
+let canvas=document.getElementById("confetti")
+let ctx=canvas.getContext("2d")
+
+canvas.width=window.innerWidth
+canvas.height=window.innerHeight
+
+let pieces=[]
+
+for(let i=0;i<150;i++){
+pieces.push({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+r:Math.random()*6+4,
+d:Math.random()*150
+})
+}
+
+function draw(){
+
+ctx.clearRect(0,0,canvas.width,canvas.height)
+
+ctx.fillStyle="#e91e63"
+
+pieces.forEach(p=>{
+ctx.beginPath()
+ctx.arc(p.x,p.y,p.r,0,Math.PI*2)
+ctx.fill()
+
+p.y+=2
+
+if(p.y>canvas.height){
+p.y=0
+}
+})
+
+requestAnimationFrame(draw)
+
+}
+
+draw()
+
+}
+
 </script>
 
 </body>
